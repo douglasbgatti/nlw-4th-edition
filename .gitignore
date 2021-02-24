@@ -25,6 +25,8 @@ coverage
 # Dependency directory
 node_modules
 
+# Dev sqlit
+*.sqlite
 # Editors
 .idea
 *.iml
