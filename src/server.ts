@@ -2,12 +2,12 @@ import "reflect-metadata";
 import "./database";
 
 import express from "express";
+import { router } from "./routes";
 
 const app = express();
 
-app.get("/users", async (req, res) => {
-  return res.json({ user: "test" });
-});
+app.use(express.json());
+app.use(router);
 
 app.listen(3333, () => {
   console.log("[server] Server is running!");
