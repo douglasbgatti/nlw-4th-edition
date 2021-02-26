@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn run migrate && ts-node-dev  --transpile-only  --ignore-watch node_modules src/server.ts",
+    "start-dev": "yarn run migrate && ts-node-dev  --transpile-only  --ignore-watch node_modules src/server.ts",
     "typeorm-cli": "ts-node-dev node_modules/typeorm/cli.js",
     "migrate": "yarn run typeorm-cli migration:run",
-    "test": "jest"
+    "test": "NODE_ENV=test jest",
+    "post-test": "rm ./src/database/database.test.sqlite"
   },
   "dependencies": {
     "express": "^4.17.1",
