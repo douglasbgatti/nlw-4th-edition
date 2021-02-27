@@ -36,6 +36,8 @@ class SendMailController {
       name: user.name,
       title: survey.title,
       description: survey.description,
+      survey_user_id: surveyUser.id,
+      link: `${process.env.API_URL}/answers`,
     };
 
     const mailProperties: MailProperties = {
