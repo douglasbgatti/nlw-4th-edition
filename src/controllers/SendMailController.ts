@@ -25,12 +25,18 @@ class SendMailController {
       return response.status(400).json({ error: "Survey does not exist" });
     }
 
-    const surveyUser = surveysUsersRepository.create({
-      user_id: user.id,
-      survey_id: survey.id,
+    let surveyUser = await surveysUsersRepository.findOne({
+      where: [{ user_id: user.id, survey_id, value: null }],
     });
 
-    await surveysUsersRepository.save(surveyUser);
+    if (!surveyUser) {
+      surveyUser = surveysUsersRepository.create({
+        user_id: user.id,
+        survey_id: survey.id,
+      });
+
+      surveyUser = await surveysUsersRepository.save(surveyUser);
+    }
 
     const variables = {
       name: user.name,
