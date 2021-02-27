@@ -27,6 +27,7 @@ class SendMailController {
 
     let surveyUser = await surveysUsersRepository.findOne({
       where: [{ user_id: user.id, survey_id, value: null }],
+      relations: ["user", "survey"],
     });
 
     if (!surveyUser) {
