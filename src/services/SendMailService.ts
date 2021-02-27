@@ -32,8 +32,8 @@ class SendMailService {
 
     const info = await this.client.sendMail({
       to: mailProperties.to,
-      subject: mailProperties.subject,
       html,
+      subject: mailProperties.subject,
       from: mailProperties.from || "NPS <noreply@nps.com>",
     });
 
@@ -41,30 +41,24 @@ class SendMailService {
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   }
 
-  private getTemplateFileContent(template: string) {
-    const templatePath = path.resolve(
-      __dirname,
-      "..",
-      "views",
-      "emails",
-      template
-    );
-    const templateFileContent = fs.readFileSync(templatePath).toString("utf-8");
+  private getTemplateFileContent(templatePath: string[]) {
+    const _templatePath = path.resolve(__dirname, ...templatePath);
+    const templateFileContent = fs
+      .readFileSync(_templatePath)
+      .toString("utf-8");
 
     return templateFileContent;
   }
 
   private getMailBodyHtml(mailProperties: MailProperties) {
     const templateFileContent = this.getTemplateFileContent(
-      mailProperties.templateName
+      mailProperties.templatePath
     );
 
     const mailTemplateParse = handlebars.compile(templateFileContent);
 
     const html = mailTemplateParse({
-      name: mailProperties.to,
-      title: mailProperties.subject,
-      description: mailProperties.body,
+      ...mailProperties.variables,
     });
 
     return html;

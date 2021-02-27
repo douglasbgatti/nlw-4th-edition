@@ -32,11 +32,18 @@ class SendMailController {
 
     await surveysUsersRepository.save(surveyUser);
 
+    const variables = {
+      name: user.name,
+      title: survey.title,
+      description: survey.description,
+    };
+
     const mailProperties: MailProperties = {
       to: email,
       subject: survey.title,
       body: survey.description,
-      templateName: "npsMail.hbs",
+      variables,
+      templatePath: ["..", "views", "emails", "npsMail.hbs"],
     };
     await SendMailService.execute(mailProperties);
 

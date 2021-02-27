@@ -3,5 +3,6 @@ interface MailProperties {
   from?: string;
   subject: string;
   body: string;
-  templateName: string;
+  variables: Object;
+  templatePath: string[];
 }
