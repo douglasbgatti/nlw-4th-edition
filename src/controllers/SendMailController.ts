@@ -32,7 +32,13 @@ class SendMailController {
 
     await surveysUsersRepository.save(surveyUser);
 
-    await SendMailService.execute(email, survey.title, survey.description);
+    const mailProperties: MailProperties = {
+      to: email,
+      subject: survey.title,
+      body: survey.description,
+      templateName: "npsMail.hbs",
+    };
+    await SendMailService.execute(mailProperties);
 
     return response.json(surveyUser);
   }
