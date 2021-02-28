@@ -14,8 +14,6 @@ class NpsController {
   async execute(request: Request, response: Response) {
     const { survey_id } = request.params;
 
-    console.log("survey_id", survey_id);
-
     const surveysUsersRepository = getCustomRepository(SurveysUsersRepository);
 
     const surveysSent = await surveysUsersRepository.find({
